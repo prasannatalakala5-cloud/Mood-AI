@@ -1,0 +1,6 @@
+{
+  "name": "MoodAI",
+  "description": "An AI-powered Mood Enhancement Platform that recommends music, chat, memes, and mini-games to boost your emotional well-being.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

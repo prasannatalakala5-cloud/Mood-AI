@@ -1,0 +1,41 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile data",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "email", "createdAt"]
+    },
+    "MoodHistory": {
+      "title": "MoodHistory",
+      "description": "A recorded session of a user's mood, activities, and improvement",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "beforeMood": { "type": "string" },
+        "reason": { "type": "string" },
+        "afterMood": { "type": "string" },
+        "improvement": { "type": "integer" },
+        "activities": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "beforeMood", "reason", "afterMood", "improvement", "activities", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "Store users profile detail"
+    },
+    "mood_history/{historyId}": {
+      "schema": "MoodHistory",
+      "description": "Store recorded user mood histories"
+    }
+  }
+}

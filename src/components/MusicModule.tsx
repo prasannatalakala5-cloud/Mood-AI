@@ -63,22 +63,21 @@ export default function MusicModule({
     setIsExpanded(false);
   }, [initialEmotion, initialLanguage, initialGender]);
 
-  // 2. సాంగ్ క్లిక్ చేసినప్పుడు స్పాటిఫై ఓపెన్ చేసే లాజిక్
+  // 2. Play song handler (Opens Spotify search link)
   const handlePlaySong = (song: DetailedSong) => {
     setCurrentSong(song);
     
-    // టోస్ట్ నోటిఫికేషన్ (Telugu & English combined)
-    setToastMessage(`🎵 "${song.title}" ఓపెన్ అవుతోంది... Opening on Spotify...`);
+    // Toast notification
+    setToastMessage(`🎵 Opening "${song.title}" on Spotify!`);
     setTimeout(() => setToastMessage(null), 3500);
 
     try {
-      // 100% వర్కింగ్ సెర్చ్ లింక్ ని క్రియేట్ చేస్తుంది (ఇది ఎప్పటికీ ఫెయిల్ అవ్వదు మరియు కరెక్ట్ సాంగ్ ని చూపిస్తుంది)
-      // Creates a 100% working Spotify search URL which always finds the correct song.
+      // Direct Spotify Search URL
       const searchQuery = encodeURIComponent(`${song.title} ${song.artist}`);
       const targetUrl = `https://open.spotify.com/search/${searchQuery}`;
       window.open(targetUrl, '_blank');
     } catch (err) {
-      console.warn("Spotify లింక్ ఓపెన్ అవ్వడం లేదు:", err);
+      console.warn("Unable to open Spotify link:", err);
     }
 
     // హిస్టరీ ట్రాకింగ్
@@ -120,12 +119,12 @@ export default function MusicModule({
       <div className="flex items-center justify-between mb-6">
         <button
           onClick={onBackToDashboard}
-          className="flex items-center justify-center w-10 h-10 rounded-full border border-white/5 bg-[#140C24] hover:bg-white/5 text-slate-300 cursor-pointer transition-all active:scale-95"
+          className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 cursor-pointer transition-all active:scale-95 shadow-sm"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
-        <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-          <Music className="w-4 h-4 text-emerald-400" />
+        <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+          <Music className="w-4 h-4 text-emerald-600" />
           Select & Play on Spotify
         </span>
         <div className="w-10"></div>
@@ -135,32 +134,42 @@ export default function MusicModule({
         <div className="space-y-4">
           {/* Active Song Context */}
           {currentSong && (
-            <div className="bg-gradient-to-b from-[#0b1b11] to-[#140C24] border border-emerald-500/20 rounded-2xl p-4 flex items-center justify-between gap-3">
+            <div className="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-3.5 flex items-center justify-between gap-3 shadow-sm">
               <div className="flex items-center gap-3 min-w-0">
                 <img 
                   src={currentSong.albumArt} 
                   alt="" 
-                  className="w-10 h-10 rounded-lg object-cover animate-[spin_8s_linear_infinite]" 
+                  className="w-11 h-11 rounded-lg object-cover border border-emerald-200 shrink-0" 
                   referrerPolicy="no-referrer"
                 />
                 <div className="min-w-0">
-                  <h4 className="text-xs font-bold text-white truncate">Now Playing: {currentSong.title}</h4>
-                  <p className="text-[10px] text-emerald-400 truncate">{currentSong.artist}</p>
+                  <h4 className="text-xs font-bold text-slate-900 truncate">Selected Song: {currentSong.title}</h4>
+                  <p className="text-[10px] text-emerald-800 truncate font-semibold">{currentSong.artist}</p>
                 </div>
               </div>
               <button 
                 onClick={() => handlePlaySong(currentSong)}
-                className="p-2 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20 hover:bg-emerald-500/20 transition-all cursor-pointer"
-                title="Reopen"
+                className="flex items-center gap-1 px-3 py-2 bg-[#1DB954] text-white hover:bg-[#189e47] rounded-xl text-[10px] font-bold shadow-sm transition-all cursor-pointer shrink-0"
+                title="Play on Spotify"
               >
-                <ExternalLink className="w-3.5 h-3.5" />
+                <SpotifyIcon />
+                <span>Listen on Spotify</span>
+                <ExternalLink className="w-3 h-3 ml-0.5" />
               </button>
             </div>
           )}
 
+          {/* Quick Info Box */}
+          <div className="bg-white border border-slate-200/80 rounded-xl p-3 text-[11px] text-slate-600 leading-snug flex items-start gap-2 shadow-sm">
+            <span className="text-sm">🎧</span>
+            <div>
+              <strong>Free Music:</strong> Click any song to open and play directly on <strong>Spotify</strong>.
+            </div>
+          </div>
+
           {/* Songs List */}
           <div className="space-y-2.5">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1 block">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider px-1 block">
               Available Songs ({songsList.length})
             </span>
 
@@ -174,23 +183,23 @@ export default function MusicModule({
                   onClick={() => handlePlaySong(song)}
                   className={`flex items-center justify-between p-3.5 rounded-2xl border transition-all duration-200 cursor-pointer hover:scale-[1.01] ${
                     isCurrent
-                      ? 'bg-emerald-950/20 border-emerald-500/50 shadow-md'
-                      : 'bg-[#140C24] border-white/5 hover:border-emerald-500/20'
+                      ? 'bg-emerald-50/80 border-emerald-300 shadow-sm'
+                      : 'bg-white border-slate-200/80 hover:border-emerald-300 shadow-sm'
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <img 
                       src={song.albumArt} 
                       alt={song.title} 
-                      className="w-11 h-11 rounded-xl object-cover border border-white/5 shrink-0" 
+                      className="w-11 h-11 rounded-xl object-cover border border-slate-200 shrink-0" 
                       referrerPolicy="no-referrer"
                     />
                     <div className="min-w-0">
-                      <h4 className="font-bold text-slate-200 text-xs truncate flex items-center gap-1.5">
+                      <h4 className="font-bold text-slate-800 text-xs truncate flex items-center gap-1.5">
                         {song.title}
-                        {isPlayed && <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />}
+                        {isPlayed && <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />}
                       </h4>
-                      <p className="text-[10px] text-slate-400 truncate mt-0.5">{song.artist}</p>
+                      <p className="text-[10px] text-slate-500 truncate mt-0.5">{song.artist}</p>
                     </div>
                   </div>
 
@@ -201,12 +210,12 @@ export default function MusicModule({
                     }}
                     className={`flex items-center gap-1.5 text-[10px] font-extrabold px-3 py-2 rounded-xl border transition-all cursor-pointer ${
                       isCurrent
-                        ? 'bg-[#1DB954] text-black border-transparent'
-                        : 'bg-[#1DB954]/10 border-[#1DB954]/20 text-[#1DB954] hover:bg-[#1DB954]/20'
+                        ? 'bg-[#1DB954] text-white border-transparent shadow-sm'
+                        : 'bg-[#1DB954]/10 border-[#1DB954]/30 text-[#15803d] hover:bg-[#1DB954]/20'
                     }`}
                   >
                     <SpotifyIcon />
-                    <span>{isCurrent ? 'Playing' : 'Play'}</span>
+                    <span>{isCurrent ? 'Open Spotify' : 'Play on Spotify'}</span>
                   </button>
                 </div>
               );
@@ -215,17 +224,17 @@ export default function MusicModule({
             {songsList.length > 2 && (
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="w-full mt-2.5 py-3 px-4 rounded-xl border border-[#1DB954]/30 bg-[#1DB954]/10 hover:bg-[#1DB954]/20 text-[#1DB954] font-bold text-xs flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98]"
+                className="w-full mt-2.5 py-3 px-4 rounded-xl border border-[#1DB954]/40 bg-[#1DB954]/10 hover:bg-[#1DB954]/20 text-[#15803d] font-bold text-xs flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98]"
               >
                 {isExpanded ? (
                   <>
                     <ChevronUp className="w-4 h-4" />
-                    <span>Show Less / </span>
+                    <span>Show Less</span>
                   </>
                 ) : (
                   <>
                     <ChevronDown className="w-4 h-4" />
-                    <span>More Songs /  ({songsList.length - 2} remaining)</span>
+                    <span>More Songs ({songsList.length - 2} remaining)</span>
                   </>
                 )}
               </button>
@@ -234,9 +243,9 @@ export default function MusicModule({
         </div>
       ) : (
         /* Feedback State */
-        <div className="bg-[#140C24] border border-white/5 rounded-3xl p-8 text-center space-y-6">
+        <div className="bg-white border border-slate-200/80 rounded-3xl p-8 text-center space-y-6 shadow-sm">
           <span className="text-5xl block">😊</span>
-          <h3 className="text-lg font-medium text-white">Did the Spotify songs improve your mood?</h3>
+          <h3 className="text-lg font-medium text-slate-900">Did the Spotify songs improve your mood?</h3>
           <div className="space-y-2">
             <button onClick={() => onFeedbackSubmit(true)} className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl cursor-pointer">Yes, feel better 😊</button>
             <button onClick={() => onFeedbackSubmit(false)} className="w-full py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl cursor-pointer">No, Still same 😐</button>

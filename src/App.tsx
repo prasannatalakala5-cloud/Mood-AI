@@ -221,30 +221,16 @@ export default function App() {
 
   // Calculates a logical improvement score based on starting vs ending emotional delta
   const calculateImprovement = (before: EmotionType, after: EmotionType): number => {
-    // Mockup strict checks as requested
-    if (before === 'Sad' && after === 'Happy') return 70;
-    if (before === 'Stressed' && after === 'Relaxed') return 60;
-    if (before === 'Angry' && after === 'Happy') return 80;
-    if (before === 'Sad' && after === 'Relaxed') return 50;
-
-    // Default weight maps
     const weights: Record<EmotionType, number> = {
       Angry: 20,
       Sad: 30,
       Stressed: 40,
-      Relaxed: 80,
+      Relaxed: 85,
       Happy: 100,
     };
 
     const diff = weights[after] - weights[before];
-    if (diff > 0) return diff;
-    
-    // Fallback: if user spent time completing activities and reported yes, grant motivating progress
-    if (improvedFeedbackCount > 0) {
-      return improvedFeedbackCount * 25;
-    }
-
-    return 10; // Baseline wellness completion
+    return diff;
   };
 
   const handleFinalMoodSubmit = async (endingEmotion: EmotionType) => {
@@ -348,26 +334,26 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d071a] text-slate-200 font-sans pb-24 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans pb-24 relative overflow-hidden">
       {/* Outer Glow effects */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[128px] pointer-events-none"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-[128px] pointer-events-none"></div>
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-200/40 rounded-full blur-[128px] pointer-events-none"></div>
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-200/40 rounded-full blur-[128px] pointer-events-none"></div>
 
       {/* Main Container */}
       <main className="relative z-10 w-full px-4 pt-6 max-w-lg mx-auto">
         {/* App Title Header Bar (Only if logged in) */}
         {user && (
-          <header className="flex justify-between items-center mb-6 bg-[#140C24]/80 backdrop-blur border border-white/5 rounded-2xl p-4 shadow-lg shadow-black/40">
+          <header className="flex justify-between items-center mb-6 bg-white/90 backdrop-blur border border-slate-200 rounded-2xl p-4 shadow-sm text-slate-800">
             <div className="flex items-center gap-2">
               <span className="p-1.5 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 text-white shadow-md shadow-purple-500/20">
                 <Sparkles className="w-5 h-5 animate-pulse" />
               </span>
-              <span className="font-light text-white tracking-tight text-sm">Mood<span className="font-semibold text-purple-400">AI</span></span>
+              <span className="font-light text-slate-900 tracking-tight text-sm">Mood<span className="font-semibold text-purple-600">AI</span></span>
             </div>
             {startEmotion && (
               <button
                 onClick={handleStartNewSession}
-                className="text-[10px] font-bold text-slate-300 bg-white/5 hover:bg-white/10 px-2.5 py-1.5 rounded-lg border border-white/5 transition-all cursor-pointer"
+                className="text-[10px] font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 px-2.5 py-1.5 rounded-lg border border-slate-200 transition-all cursor-pointer"
               >
                 Reset Session
               </button>
@@ -382,21 +368,21 @@ export default function App() {
           /* Profile Tab View - Fully Interactive & Customized */
           <div className="space-y-6">
             {/* User Profile Card */}
-            <div className="bg-[#140C24] border border-white/5 rounded-3xl p-6 text-center shadow-lg shadow-black/40 space-y-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center text-white text-2xl font-semibold mx-auto shadow-lg shadow-purple-500/20">
+            <div className="bg-white border border-slate-200/80 rounded-3xl p-6 text-center shadow-sm space-y-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center text-white text-2xl font-semibold mx-auto shadow-md shadow-purple-500/20">
                 {user.displayName.charAt(0).toUpperCase()}
               </div>
               <div>
-                <h3 className="text-xl font-light text-white">{user.displayName}</h3>
-                <p className="text-xs text-slate-400 mt-0.5">{user.email}</p>
+                <h3 className="text-xl font-light text-slate-900">{user.displayName}</h3>
+                <p className="text-xs text-slate-500 mt-0.5">{user.email}</p>
               </div>
               
-              <div className="pt-3 border-t border-white/5 flex justify-center gap-3 text-xs font-semibold">
-                <span className="bg-white/5 px-3 py-1.5 rounded-xl text-slate-300 border border-white/5">
-                  Gender: <strong className="text-purple-400">{userGender}</strong>
+              <div className="pt-3 border-t border-slate-100 flex justify-center gap-3 text-xs font-semibold">
+                <span className="bg-slate-50 px-3 py-1.5 rounded-xl text-slate-700 border border-slate-200">
+                  Gender: <strong className="text-purple-600">{userGender}</strong>
                 </span>
-                <span className="bg-white/5 px-3 py-1.5 rounded-xl text-slate-300 border border-white/5">
-                  Music: <strong className="text-purple-400">{userLanguage}</strong>
+                <span className="bg-slate-50 px-3 py-1.5 rounded-xl text-slate-700 border border-slate-200">
+                  Music: <strong className="text-purple-600">{userLanguage}</strong>
                 </span>
               </div>
               
@@ -405,7 +391,7 @@ export default function App() {
                   setStage('select-preferences');
                   setActiveTab('home');
                 }}
-                className="text-[10px] font-bold text-purple-300 bg-purple-500/10 hover:bg-purple-500/20 px-3 py-1.5 rounded-xl border border-purple-500/20 transition-all cursor-pointer mt-1"
+                className="text-[10px] font-bold text-purple-700 bg-purple-50 hover:bg-purple-100 px-3 py-1.5 rounded-xl border border-purple-200 transition-all cursor-pointer mt-1"
               >
                 Change Preferences
               </button>
@@ -413,29 +399,29 @@ export default function App() {
 
             {/* Dynamic Stats Grid */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-[#140C24] border border-white/5 p-4 rounded-2xl shadow-lg text-center relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-orange-500/30" />
+              <div className="bg-white border border-slate-200/80 p-4 rounded-2xl shadow-sm text-center relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1 bg-orange-500/50" />
                 <Flame className="w-8 h-8 text-orange-500 mx-auto mb-1.5 animate-pulse" />
-                <span className="block text-2xl font-bold text-slate-100">
+                <span className="block text-2xl font-bold text-slate-900">
                   {pet && pet.petSelected ? pet.streak : (localStorage.getItem('moodai_streak') || 3)} Days
                 </span>
-                <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mt-1">Wellness Streak</span>
+                <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider block mt-1">Wellness Streak</span>
               </div>
-              <div className="bg-[#140C24] border border-white/5 p-4 rounded-2xl shadow-lg text-center relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-yellow-500/30" />
-                <Trophy className="w-8 h-8 text-yellow-500 mx-auto mb-1.5" />
-                <span className="block text-2xl font-bold text-slate-100">{mindfulnessCore}%</span>
-                <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mt-1">Mindfulness Core</span>
+              <div className="bg-white border border-slate-200/80 p-4 rounded-2xl shadow-sm text-center relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1 bg-amber-500/50" />
+                <Trophy className="w-8 h-8 text-amber-500 mx-auto mb-1.5" />
+                <span className="block text-2xl font-bold text-slate-900">{mindfulnessCore}%</span>
+                <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider block mt-1">Mindfulness Core</span>
               </div>
             </div>
 
             {/* Companion Pet Adoption & Profile Deck */}
-            <div className="bg-[#140C24] border border-white/5 rounded-2xl p-5 shadow-lg space-y-4">
-              <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
                   🐾 Active Companion
                 </span>
-                <span className="text-[10px] text-purple-400 font-bold bg-purple-500/10 border border-purple-500/20 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] text-purple-700 font-bold bg-purple-50 border border-purple-200 px-2 py-0.5 rounded-full">
                   {pet && pet.petSelected ? 'Adopted' : 'Unbound'}
                 </span>
               </div>
@@ -443,7 +429,7 @@ export default function App() {
               {!pet || !pet.petSelected ? (
                 /* No Pet Adopted Card */
                 <div className="text-center py-4 space-y-3">
-                  <p className="text-xs text-slate-400 leading-relaxed">
+                  <p className="text-xs text-slate-500 leading-relaxed">
                     You do not have an active pet companion yet! A virtual companion helps you stay mindful and tracks your therapy progress.
                   </p>
                   <button
@@ -451,7 +437,7 @@ export default function App() {
                       setStage('pet');
                       setActiveTab('home');
                     }}
-                    className="py-2.5 px-4 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-bold rounded-xl text-xs shadow-lg shadow-purple-500/20 transition-all cursor-pointer"
+                    className="py-2.5 px-4 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-bold rounded-xl text-xs shadow-md shadow-purple-500/20 transition-all cursor-pointer"
                   >
                     Adopt your Companion Pet
                   </button>
@@ -462,7 +448,7 @@ export default function App() {
                   {!isEditingPet ? (
                     /* Display Mode */
                     <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 rounded-2xl bg-purple-950/20 border border-purple-500/20 flex items-center justify-center text-4xl shadow-inner animate-[bounce_2.5s_infinite_ease-in-out]">
+                      <div className="w-16 h-16 rounded-2xl bg-purple-50 border border-purple-200 flex items-center justify-center text-4xl shadow-inner animate-[bounce_2.5s_infinite_ease-in-out]">
                         {pet.petType === 'dog' && '🐶'}
                         {pet.petType === 'cat' && '🐱'}
                         {pet.petType === 'rabbit' && '🐰'}
@@ -471,16 +457,16 @@ export default function App() {
                         {pet.petType === 'bird' && '🐦'}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-bold text-white text-base truncate flex items-center gap-1.5">
+                        <h4 className="font-bold text-slate-900 text-base truncate flex items-center gap-1.5">
                           {pet.petName}
-                          <span className="text-[10px] font-semibold text-slate-400 capitalize">
+                          <span className="text-[10px] font-semibold text-slate-500 capitalize">
                             ({pet.petType})
                           </span>
                         </h4>
-                        <div className="flex items-center gap-2 text-[11px] text-slate-400 mt-0.5">
+                        <div className="flex items-center gap-2 text-[11px] text-slate-500 mt-0.5">
                           <span>Growth: <strong>Day {pet.age}</strong></span>
                           <span>•</span>
-                          <span className="text-yellow-400 flex items-center gap-0.5 font-bold">
+                          <span className="text-amber-600 flex items-center gap-0.5 font-bold">
                             🪙 {pet.coins}
                           </span>
                         </div>
@@ -491,7 +477,7 @@ export default function App() {
                           setEditPetType(pet.petType);
                           setIsEditingPet(true);
                         }}
-                        className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white border border-white/5 transition-all cursor-pointer"
+                        className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200 transition-all cursor-pointer"
                         title="Edit Pet Profile"
                       >
                         <Edit2 className="w-3.5 h-3.5" />
@@ -499,21 +485,21 @@ export default function App() {
                     </div>
                   ) : (
                     /* Edit Mode Form */
-                    <div className="space-y-3 bg-[#1C162E]/50 rounded-xl p-3 border border-purple-500/10">
+                    <div className="space-y-3 bg-slate-50 rounded-xl p-3 border border-slate-200">
                       <div className="space-y-1">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                        <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">
                           Companion Name
                         </label>
                         <input
                           type="text"
                           value={editPetName}
                           onChange={(e) => setEditPetName(e.target.value.slice(0, 15))}
-                          className="w-full bg-slate-950 border border-white/5 px-3 py-2 rounded-lg text-xs text-white focus:outline-none focus:border-purple-500"
+                          className="w-full bg-white border border-slate-200 px-3 py-2 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-purple-500"
                         />
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                        <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">
                           Companion Species
                         </label>
                         <div className="grid grid-cols-6 gap-1">

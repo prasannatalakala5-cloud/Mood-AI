@@ -906,11 +906,11 @@ export default function GamesModule({ emotion, onFeedbackSubmit, onBackToDashboa
               ? () => setActiveGame('none')
               : onBackToDashboard
           }
-          className="flex items-center justify-center w-10 h-10 rounded-full border border-white/5 bg-[#140C24] shadow-md hover:bg-white/5 text-slate-300 cursor-pointer"
+          className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 bg-white shadow-sm hover:bg-slate-50 text-slate-700 cursor-pointer"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
-        <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+        <span className="text-xs font-semibold uppercase tracking-wider text-slate-600">
           Relaxing Mini Games
         </span>
         <div className="w-10"></div>
@@ -919,13 +919,13 @@ export default function GamesModule({ emotion, onFeedbackSubmit, onBackToDashboa
       {activeGame === 'none' && !showFeedback && (
         <div className="space-y-6">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-400 border border-purple-500/20 mb-3">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 border border-purple-200 mb-3">
               <Sparkles className="w-6 h-6 animate-pulse" />
             </div>
-            <h3 className="text-2xl font-light text-white tracking-tight">
+            <h3 className="text-2xl font-light text-slate-900 tracking-tight">
               Relaxing <span className="font-semibold">Mini Games</span>
             </h3>
-            <p className="text-xs text-slate-400 mt-1">Play and unwind your thoughts.</p>
+            <p className="text-xs text-slate-600 mt-1">Play and unwind your thoughts.</p>
           </div>
 
           {/* List of Game Options */}
@@ -933,15 +933,15 @@ export default function GamesModule({ emotion, onFeedbackSubmit, onBackToDashboa
             {gamesList.map((game) => (
               <div
                 key={game.id}
-                className="flex items-center justify-between p-4 bg-[#140C24] border border-white/5 rounded-2xl shadow-lg hover:border-purple-500/20 transition-all group"
+                className="flex items-center justify-between p-4 bg-white border border-slate-200/80 rounded-2xl shadow-sm hover:border-purple-300 transition-all group"
               >
                 <div className="flex items-center gap-4">
                   <div className={`p-3.5 rounded-xl text-2xl flex items-center justify-center border ${game.color}`}>
                     {game.emoji}
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-200 text-sm">{game.title}</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">{game.desc}</p>
+                    <h4 className="font-bold text-slate-900 text-sm">{game.title}</h4>
+                    <p className="text-xs text-slate-500 mt-0.5">{game.desc}</p>
                   </div>
                 </div>
                 <button
@@ -965,35 +965,35 @@ export default function GamesModule({ emotion, onFeedbackSubmit, onBackToDashboa
 
       {/* Feedback Card */}
       {showFeedback && (
-        <div className="bg-[#140C24] border border-white/5 rounded-3xl p-8 shadow-2xl text-center space-y-6">
+        <div className="bg-white border border-slate-200/80 rounded-3xl p-8 shadow-sm text-center space-y-6">
           <div className="text-5xl animate-bounce">🎮</div>
 
           <div className="space-y-1">
-            <h3 className="text-2xl font-light text-white tracking-tight">
+            <h3 className="text-2xl font-light text-slate-900 tracking-tight">
               Did playing game <span className="font-semibold">improve your mood?</span>
             </h3>
-            <p className="text-sm text-slate-400">Your review helps calculate mood improvement ratings.</p>
+            <p className="text-sm text-slate-500">Your review helps calculate mood improvement ratings.</p>
           </div>
 
           <div className="space-y-3 pt-2">
             <button
               onClick={() => onFeedbackSubmit(true)}
-              className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/10 transition-all cursor-pointer"
+              className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-sm transition-all cursor-pointer"
             >
               Yes, I feel better 😊
             </button>
             <button
               onClick={() => onFeedbackSubmit(false)}
-              className="w-full py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl shadow-lg shadow-rose-500/10 transition-all cursor-pointer"
+              className="w-full py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl shadow-sm transition-all cursor-pointer"
             >
               No, Still same 😐
             </button>
           </div>
 
-          <div className="border-t border-white/5 pt-5">
+          <div className="border-t border-slate-100 pt-5">
             <button
               onClick={onBackToDashboard}
-              className="w-full py-2.5 bg-white/5 border border-white/5 text-slate-300 font-bold rounded-xl text-xs hover:bg-white/10 transition-all cursor-pointer"
+              className="w-full py-2.5 bg-slate-100 border border-slate-200 text-slate-700 font-bold rounded-xl text-xs hover:bg-slate-200 transition-all cursor-pointer"
             >
               Change Module
             </button>

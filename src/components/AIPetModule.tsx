@@ -1044,17 +1044,17 @@ export default function AIPetModule({ onBackToDashboard, onNavigate, userName }:
       <div className="flex items-center justify-between mb-3.5">
         <button
           onClick={onBackToDashboard}
-          className="flex items-center justify-center w-9 h-9 rounded-full border border-white/5 bg-[#140C24] text-slate-300 hover:bg-white/5 transition-transform cursor-pointer"
+          className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition-transform cursor-pointer shadow-sm"
         >
           <ArrowLeft className="w-4 h-4" />
         </button>
 
         {/* Pet Name Indicator */}
-        <div className="flex items-center gap-1.5 bg-[#140C24] border border-white/5 px-3 py-1.5 rounded-full">
-          <span className="text-xs font-bold text-purple-300 flex items-center gap-1">
+        <div className="flex items-center gap-1.5 bg-white border border-slate-200/80 px-3 py-1.5 rounded-full shadow-sm">
+          <span className="text-xs font-bold text-purple-700 flex items-center gap-1">
             {currentStageInfo.emoji} {pet.petName}
           </span>
-          <span className="text-[9px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded-full font-extrabold uppercase">
+          <span className="text-[9px] bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full font-extrabold uppercase">
             Day {pet.age}
           </span>
         </div>
@@ -1063,13 +1063,13 @@ export default function AIPetModule({ onBackToDashboard, onNavigate, userName }:
         <div className="flex items-center gap-2">
           <button
             onClick={() => setSoundEnabled(!soundEnabled)}
-            className="p-2 rounded-full bg-white/5 border border-white/5 hover:bg-white/10 text-slate-300 cursor-pointer"
+            className="p-2 rounded-full bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 cursor-pointer shadow-sm"
             title={soundEnabled ? 'Mute Sounds' : 'Unmute Sounds'}
           >
-            {soundEnabled ? <Volume2 className="w-4 h-4 text-purple-400" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
+            {soundEnabled ? <Volume2 className="w-4 h-4 text-purple-600" /> : <VolumeX className="w-4 h-4 text-slate-400" />}
           </button>
           
-          <div className="flex items-center gap-1.5 bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 px-3 py-1.5 rounded-full font-extrabold text-xs shadow-inner">
+          <div className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 text-amber-800 px-3 py-1.5 rounded-full font-extrabold text-xs shadow-sm">
             <span>🪙</span>
             <span>{pet.coins}</span>
           </div>
@@ -1077,10 +1077,10 @@ export default function AIPetModule({ onBackToDashboard, onNavigate, userName }:
       </div>
 
       {/* Main Care & Animation Area */}
-      <div className="bg-[#140C24] border border-white/5 rounded-3xl p-4.5 shadow-2xl relative overflow-hidden space-y-5">
+      <div className="bg-white border border-slate-200/80 rounded-3xl p-4.5 shadow-sm relative overflow-hidden space-y-5">
         
         {/* Animated Viewport */}
-        <div className="relative w-full h-48 rounded-2xl overflow-hidden border border-purple-500/10 flex items-center justify-center bg-gradient-to-b from-[#180e2d] to-[#0e071c] shadow-inner">
+        <div className="relative w-full h-48 rounded-2xl overflow-hidden border border-purple-100 flex items-center justify-center bg-gradient-to-b from-purple-50 to-indigo-50 shadow-inner">
           
           {/* Environment elements depending on current animation */}
           {currentAnimation === 'sleep' ? (

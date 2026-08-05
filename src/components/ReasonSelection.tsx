@@ -67,23 +67,23 @@ export default function ReasonSelection({ emotion, onSelectReason, onBack }: Rea
       <div className="flex items-center justify-between mb-8">
         <button
           onClick={onBack}
-          className="flex items-center justify-center w-10 h-10 rounded-full border border-white/5 bg-[#140C24] shadow-md hover:bg-white/5 text-slate-300 cursor-pointer transition-all active:scale-95"
+          className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 bg-white shadow-sm hover:bg-slate-50 text-slate-700 cursor-pointer transition-all active:scale-95"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div className="flex gap-1">
-          <div className="w-3 h-1.5 bg-purple-950 rounded-full"></div>
-          <div className="w-8 h-1.5 bg-purple-500 rounded-full"></div>
-          <div className="w-3 h-1.5 bg-purple-950 rounded-full"></div>
+          <div className="w-3 h-1.5 bg-slate-200 rounded-full"></div>
+          <div className="w-8 h-1.5 bg-purple-600 rounded-full"></div>
+          <div className="w-3 h-1.5 bg-slate-200 rounded-full"></div>
         </div>
         <div className="w-10"></div> {/* Spacer to keep header centered */}
       </div>
 
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-light text-white tracking-tight">
-          Why are you feeling <span className="font-semibold text-purple-300">{emotion}</span>?
+        <h3 className="text-2xl font-light text-slate-900 tracking-tight">
+          Why are you feeling <span className="font-semibold text-purple-600">{emotion}</span>?
         </h3>
-        <p className="text-sm text-slate-400 mt-2">Select the closest reason below.</p>
+        <p className="text-sm text-slate-600 mt-2">Select the closest reason below.</p>
       </div>
 
       {/* Lists of reason selectors */}
@@ -94,17 +94,17 @@ export default function ReasonSelection({ emotion, onSelectReason, onBack }: Rea
             <button
               key={idx}
               onClick={() => onSelectReason(reason.text)}
-              className="w-full flex items-center justify-between p-4 bg-[#140C24] hover:bg-[#1A122B] border border-white/5 rounded-2xl shadow-lg hover:shadow-purple-950/20 hover:border-purple-500/20 transition-all duration-200 text-left group cursor-pointer"
+              className="w-full flex items-center justify-between p-4 bg-white hover:bg-slate-50 border border-slate-200/80 rounded-2xl shadow-sm hover:shadow-md hover:border-purple-300 transition-all duration-200 text-left group cursor-pointer"
             >
               <div className="flex items-center gap-4">
                 <div className={`p-3 rounded-xl ${reason.color} transition-all`}>
                   <IconComponent className="w-5 h-5" />
                 </div>
-                <span className="font-semibold text-slate-300 text-sm group-hover:text-white">
+                <span className="font-semibold text-slate-800 text-sm group-hover:text-purple-950">
                   {reason.text}
                 </span>
               </div>
-              <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-purple-400 group-hover:translate-x-0.5 transition-all" />
+              <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all" />
             </button>
           );
         })}

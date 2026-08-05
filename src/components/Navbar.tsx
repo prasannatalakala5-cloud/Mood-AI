@@ -15,7 +15,7 @@ export default function Navbar({ activeTab, onTabChange, onLogout, userName }: N
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#140C24]/90 backdrop-blur-lg border-t border-white/5 py-3 px-6 shadow-2xl flex justify-between items-center max-w-lg mx-auto rounded-t-3xl">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-lg border-t border-slate-200 py-3 px-6 shadow-xl shadow-purple-900/5 flex justify-between items-center max-w-lg mx-auto rounded-t-3xl">
       <div className="flex gap-4 flex-1 justify-around">
         {tabs.map((tab) => {
           const IconComp = tab.icon;
@@ -25,7 +25,7 @@ export default function Navbar({ activeTab, onTabChange, onLogout, userName }: N
               key={tab.id}
               onClick={() => onTabChange(tab.id as any)}
               className={`flex flex-col items-center gap-1 cursor-pointer transition-all ${
-                isActive ? 'text-purple-400 scale-105 font-bold' : 'text-slate-400 hover:text-slate-200'
+                isActive ? 'text-purple-600 scale-105 font-bold' : 'text-slate-400 hover:text-slate-700'
               }`}
             >
               <IconComp className="w-5 h-5" />
@@ -37,7 +37,7 @@ export default function Navbar({ activeTab, onTabChange, onLogout, userName }: N
         {/* Logout tab */}
         <button
           onClick={onLogout}
-          className="flex flex-col items-center gap-1 text-slate-400 hover:text-rose-400 cursor-pointer transition-all"
+          className="flex flex-col items-center gap-1 text-slate-400 hover:text-rose-600 cursor-pointer transition-all"
           title="Sign Out"
         >
           <LogOut className="w-5 h-5" />
